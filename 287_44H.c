@@ -37,3 +37,21 @@ void payFees() {
 
     if(found) printf("Fees Updated.\n");
 }
+// 10. Show Defaulters
+void showDefaulters() {
+    FILE *fp = fopen(FILE_NAME, "r");
+    char line[200];
+
+    printf("\n--- Fee Defaulters (Pending) ---\n");
+
+    while(fgets(line, sizeof(line), fp)) {
+        Student s;
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%s",
+               s.name, s.id, s.phone, s.room, s.fees);
+
+        if(strcmp(s.fees, "Pending") == 0)
+            printf("%s (%s)\n", s.name, s.id);
+    }
+
+    fclose(fp);
+}
