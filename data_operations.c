@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "functions.h"
 
 #define FILE_NAME "students.txt"
 #define TEMP "temp.txt"

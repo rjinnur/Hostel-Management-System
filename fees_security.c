@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <string.h>
-#include "functions.h"
 
 #define FILE_NAME "students.txt"
+#define TEMP "temp.txt"
 
-// 7. Assign Room
-void assignRoom() {
+/*9. Pay Fees*/ 
+
+void payFees() {
     FILE *fp = fopen(FILE_NAME, "r");
-    FILE *temp = fopen("temp.txt", "w");
+    FILE *temp = fopen(TEMP, "w");
 
-    char id[20], newRoom[10], line[200];
+    char id[20], line[200];
     int found = 0;
 
-    printf("Enter Student ID: ");
+    printf("Enter ID to Mark Paid: ");
     scanf("%s", id);
-    printf("Enter New Room: ");
-    scanf("%s", newRoom);
 
     while(fgets(line, sizeof(line), fp)) {
         Student s;
@@ -23,7 +22,7 @@ void assignRoom() {
                s.name, s.id, s.phone, s.room, s.fees);
 
         if(strcmp(id, s.id) == 0) {
-            strcpy(s.room, newRoom);
+            strcpy(s.fees, "Paid");
             found = 1;
         }
 
@@ -34,30 +33,42 @@ void assignRoom() {
     fclose(fp);
     fclose(temp);
     remove(FILE_NAME);
-    rename("temp.txt", FILE_NAME);
+    rename(TEMP, FILE_NAME);
 
-    if(found) printf("Room Assigned.\n");
-    else printf("ID Not Found.\n");
+    if(found) printf("Fees Updated.\n");
 }
 
-// 8. Check Room Capacity
-void checkRoomCapacity() {
-    FILE *fp = fopen(FILE_NAME, "r");
-    char room[10], line[200];
-    int count = 0;
+/*10. Show Defaulters*/
 
-    printf("Enter Room Number: ");
-    scanf("%s", room);
+void showDefaulters() {
+    FILE *fp = fopen(FILE_NAME, "r");
+    char line[200];
+
+    printf("\n--- Fee Defaulters (Pending) ---\n");
 
     while(fgets(line, sizeof(line), fp)) {
         Student s;
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%s",
                s.name, s.id, s.phone, s.room, s.fees);
 
-        if(strcmp(room, s.room) == 0)
-            count++;
+        if(strcmp(s.fees, "Pending") == 0)
+            printf("%s (%s)\n", s.name, s.id);
     }
 
-    printf("Room %s has %d students.\n", room, count);
     fclose(fp);
+}
+
+/*11. Change Password*/
+
+void changePassword() {
+    char newPass[20];
+
+    printf("Enter New Password: ");
+    scanf("%s", newPass);
+
+    FILE *fp = fopen("password.txt", "w");
+    fprintf(fp, "%s", newPass);
+    fclose(fp);
+
+    printf("Password Changed Successfully.\n");
 }
