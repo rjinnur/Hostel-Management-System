@@ -80,16 +80,16 @@ void viewAll() {
     FILE *fp = fopen(FILE_NAME, "r");
     char line[200];
 
-    printf("\n%-25s %-10s %-12s %-8s %-10s\n",
+    printf("\n%-25s %-15s %-18s %-8s %-10s\n",
            "Name", "ID", "Phone", "Room", "Fees");
-    printf("------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------------\n");
 
     while(fgets(line, sizeof(line), fp)) {
         Student s;
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%s",
                s.name, s.id, s.phone, s.room, s.fees);
 
-        printf("%-25s %-10s %-12s %-8s %-10s\n",
+        printf("%-25s %-15s %-18s %-8s %-10s\n",
                s.name, s.id, s.phone, s.room, s.fees);
     }
 
